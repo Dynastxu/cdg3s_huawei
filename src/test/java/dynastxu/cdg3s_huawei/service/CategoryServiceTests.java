@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
-public class CategoryServiceTest {
+public class CategoryServiceTests {
 
     @Autowired
     private CategoryService categoryService;
