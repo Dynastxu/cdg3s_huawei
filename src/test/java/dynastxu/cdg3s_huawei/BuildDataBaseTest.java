@@ -4,10 +4,7 @@ import dynastxu.cdg3s_huawei.entity.Category;
 import dynastxu.cdg3s_huawei.entity.Goods;
 import dynastxu.cdg3s_huawei.entity.GoodsImage;
 import dynastxu.cdg3s_huawei.entity.GoodsTag;
-import dynastxu.cdg3s_huawei.service.CategoryService;
-import dynastxu.cdg3s_huawei.service.GoodsImageService;
-import dynastxu.cdg3s_huawei.service.GoodsService;
-import dynastxu.cdg3s_huawei.service.GoodsTagService;
+import dynastxu.cdg3s_huawei.service.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,12 +25,16 @@ public class BuildDataBaseTest {
     @Autowired
     private GoodsService goodsService;
 
+    @Autowired
+    private UserService userService;
+
     @Test
     void buildDataBase() {
         buildCategory();
         buildGoodsImage();
         buildGoodsTag();
         buildGoods();
+        buildUser();
     }
 
     private void buildCategory() {
@@ -197,5 +198,12 @@ public class BuildDataBaseTest {
                 .mainImage(goodsImageService.findByImagePath("/images/goods/xiaomi_17t_pro/1.png"))
                 .build()
         );
+    }
+
+    private void buildUser() {
+        UserService service = userService;
+
+        service.register("ZhangSan", "123456");
+        service.register("LiSi", "666666");
     }
 }
