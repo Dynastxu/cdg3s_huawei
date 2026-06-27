@@ -63,10 +63,14 @@ public class BuildDataBaseTest {
         service.saveOrUpdate(new Category("Xiaomi MIX系列", service.findByName("Xiaomi手机")));
         service.saveOrUpdate(new Category("Xiaomi Civi", service.findByName("Xiaomi手机")));
         service.saveOrUpdate(new Category("Xiaomi手机套装", service.findByName("Xiaomi手机")));
+
         service.saveOrUpdate(new Category("K系列", service.findByName("REDMI手机")));
         service.saveOrUpdate(new Category("Note系列", service.findByName("REDMI手机")));
         service.saveOrUpdate(new Category("Turbo系列", service.findByName("REDMI手机")));
         service.saveOrUpdate(new Category("数字系列", service.findByName("REDMI手机")));
+
+        service.saveOrUpdate(new Category("Xiaomi配件", service.findByName("手机配件")));
+
     }
 
     private void buildGoodsImage() {
