@@ -19,7 +19,12 @@ public class UserService extends BaseService<UserRepository> {
             throw new IllegalArgumentException("用户名已存在");
         }
 
-        String encodedPassword = passwordEncoder.encode(password);
+        String validPsw = password.replace(" ", "");
+        if (validPsw.length() < 6 || validPsw.isBlank()) {
+            throw new IllegalArgumentException("密码不能少于 6 位");
+        }
+
+        String encodedPassword = passwordEncoder.encode(validPsw);
 
         User user = new User(username, encodedPassword);
 
@@ -39,10 +44,15 @@ public class UserService extends BaseService<UserRepository> {
             throw new IllegalStateException("用户未激活");
         }
 
-        if (!passwordEncoder.matches(rawPassword, user.getPassword())) {
+        String validPsw = rawPassword.replace(" ", "");
+        if (!passwordEncoder.matches(validPsw, user.getPassword())) {
             throw new IllegalArgumentException("用户名或密码错误");
         }
 
         return user;
+    }
+
+    public User findByUsername(String username) {
+        return repository.findByUsername(username).orElse(null);
     }
 }

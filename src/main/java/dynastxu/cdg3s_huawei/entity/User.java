@@ -29,10 +29,11 @@ public class User {
     @NotBlank
     @Size(min = 3, max = 50)
     @Column(unique = true)
+    @Pattern(regexp = "^[A-Za-z0-9_]+$", message = "只允许大小写英文字母、数字及下划线")
     private String username;
 
     @Size(min = 3, max = 50)
-    @Pattern(regexp = ".*\\S.*", message = "不能为空白")
+    @Pattern(regexp = "^\\S+(?:.*\\S)?$", message = "首尾不能为空格")
     private String nickname;
 
     @NotBlank
