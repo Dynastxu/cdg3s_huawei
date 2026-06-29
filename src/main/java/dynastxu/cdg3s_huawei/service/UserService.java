@@ -55,4 +55,21 @@ public class UserService extends BaseService<UserRepository> {
     public User findByUsername(String username) {
         return repository.findByUsername(username).orElse(null);
     }
+
+    public User setNickname(String username, String nickname) {
+        User user = repository.findByUsername(username).orElse(null);
+        if (user != null) {
+            user.setNickname(nickname);
+            repository.save(user);
+        }
+        return user;
+    }
+
+    public String getNickname(String username) {
+        User user = repository.findByUsername(username).orElse(null);
+        if (user != null) {
+            return user.getNickname();
+        }
+        return null;
+    }
 }

@@ -205,5 +205,7 @@ public class BuildDataBaseTest {
 
         service.register("ZhangSan", "123456");
         service.register("LiSi", "666666");
+
+        service.setNickname("ZhangSan", "法外狂徒");
     }
 }
