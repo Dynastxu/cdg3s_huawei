@@ -1,13 +1,11 @@
 package dynastxu.cdg3s_huawei;
 
-import dynastxu.cdg3s_huawei.entity.Category;
-import dynastxu.cdg3s_huawei.entity.Goods;
-import dynastxu.cdg3s_huawei.entity.GoodsImage;
-import dynastxu.cdg3s_huawei.entity.GoodsTag;
+import dynastxu.cdg3s_huawei.entity.*;
 import dynastxu.cdg3s_huawei.service.*;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class DatabaseGenerator {
@@ -21,18 +19,22 @@ public class DatabaseGenerator {
 
     private final UserService userService;
 
+    private final GoodsSpecificationService goodsSpecificationService;
+
     public DatabaseGenerator(
             CategoryService categoryService,
             GoodsImageService goodsImageService,
             GoodsTagService goodsTagService,
             GoodsService goodsService,
-            UserService userService
+            UserService userService,
+            GoodsSpecificationService goodsSpecificationService
     ) {
         this.categoryService = categoryService;
         this.goodsImageService = goodsImageService;
         this.goodsTagService = goodsTagService;
         this.goodsService = goodsService;
         this.userService = userService;
+        this.goodsSpecificationService = goodsSpecificationService;
         genDatabase();
     }
 
@@ -40,6 +42,7 @@ public class DatabaseGenerator {
         genCategory();
         genGoodsImage();
         genGoodsTag();
+        genGoodsSpecification();
         genGoods();
         genUser();
     }
@@ -219,6 +222,14 @@ public class DatabaseGenerator {
                         goodsImageService.findByImagePath("/images/goods/xiaomi_17t_pro/3.jpg"),
                         goodsImageService.findByImagePath("/images/goods/xiaomi_17t_pro/4.jpg")
                 ))
+                .specifications(List.of(
+                        goodsSpecificationService.findByNameAndValue("版本", "12GB+256GB"),
+                        goodsSpecificationService.findByNameAndValue("版本", "12GB+512GB"),
+                        goodsSpecificationService.findByNameAndValue("版本", "16GB+512GB"),
+                        goodsSpecificationService.findByNameAndValue("颜色", "黑色"),
+                        goodsSpecificationService.findByNameAndValue("颜色", "午夜蓝"),
+                        goodsSpecificationService.findByNameAndValue("颜色", "星云紫")
+                ))
                 .build()
         );
 
@@ -300,5 +311,23 @@ public class DatabaseGenerator {
         service.register("LiSi", "666666");
 
         service.setNickname("ZhangSan", "法外狂徒");
+    }
+
+    private void genGoodsSpecification() {
+        GoodsSpecificationService service = goodsSpecificationService;
+
+        Set.of("12GB+256GB", "12GB+512GB", "16GB+512GB").forEach(v -> service.save(
+                GoodsSpecification.builder()
+                        .name("版本")
+                        .value(v)
+                        .build()
+        ));
+
+        Set.of("黑色", "午夜蓝", "星云紫").forEach(v -> service.save(
+                GoodsSpecification.builder()
+                        .name("颜色")
+                        .value(v)
+                        .build()
+        ));
     }
 }

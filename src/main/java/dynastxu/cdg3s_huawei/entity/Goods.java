@@ -6,9 +6,11 @@ import lombok.*;
 
 import java.util.List;
 
-@Setter
-@Getter
 @Entity
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Goods {
     @Id
@@ -25,6 +27,7 @@ public class Goods {
     private Float startingPrice;
 
     @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable
     private List<GoodsTag> goodsTag;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -36,32 +39,9 @@ public class Goods {
     private GoodsImage mainImage;
 
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "goods_id")
     private List<GoodsImage> images;
 
-    public Goods(@NotNull Float price, @NotNull String name) {
-        this.price = price;
-        this.name = name;
-    }
-
-    @Builder
-    public Goods(
-            Float price,
-            @NotNull String name,
-            Float discountedPrice,
-            List<GoodsTag> goodsTag,
-            Category category,
-            GoodsImage mainImage,
-            List<GoodsImage> images,
-            Float startingPrice
-    ) {
-        this.price = price;
-        this.name = name;
-        this.discountedPrice = discountedPrice;
-        this.goodsTag = goodsTag;
-        this.category = category;
-        this.mainImage = mainImage;
-        this.images = images;
-        this.startingPrice = startingPrice;
-    }
+    @ManyToMany
+    @JoinTable
+    private List<GoodsSpecification> specifications;
 }

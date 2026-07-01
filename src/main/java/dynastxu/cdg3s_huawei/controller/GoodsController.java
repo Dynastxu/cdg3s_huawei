@@ -21,7 +21,7 @@ public class GoodsController extends BaseController<GoodsService> {
         return service.findByCategoryId(categoryId);
     }
 
-    @RequestMapping("")
+    @RequestMapping
     @ResponseBody
     public Goods getGoods(Long id) {
         return service.findById(id);
