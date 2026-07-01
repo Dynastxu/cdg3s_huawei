@@ -10,16 +10,14 @@ import java.util.Set;
 @Component
 public class DatabaseGenerator {
     private final CategoryService categoryService;
-
     private final GoodsImageService goodsImageService;
-
     private final GoodsTagService goodsTagService;
-
     private final GoodsService goodsService;
-
     private final UserService userService;
-
     private final GoodsSpecificationService goodsSpecificationService;
+    private final GoodsSpecificationImageService goodsSpecificationImageService;
+
+    private Goods xiaomi17tPro;
 
     public DatabaseGenerator(
             CategoryService categoryService,
@@ -27,7 +25,8 @@ public class DatabaseGenerator {
             GoodsTagService goodsTagService,
             GoodsService goodsService,
             UserService userService,
-            GoodsSpecificationService goodsSpecificationService
+            GoodsSpecificationService goodsSpecificationService,
+            GoodsSpecificationImageService goodsSpecificationImageService
     ) {
         this.categoryService = categoryService;
         this.goodsImageService = goodsImageService;
@@ -35,6 +34,7 @@ public class DatabaseGenerator {
         this.goodsService = goodsService;
         this.userService = userService;
         this.goodsSpecificationService = goodsSpecificationService;
+        this.goodsSpecificationImageService = goodsSpecificationImageService;
         genDatabase();
     }
 
@@ -45,6 +45,7 @@ public class DatabaseGenerator {
         genGoodsSpecification();
         genGoods();
         genUser();
+        genGoodsSpecificationImage();
     }
 
     private void genCategory() {
@@ -181,6 +182,9 @@ public class DatabaseGenerator {
         service.save(new GoodsImage(rootPath + "/xiaomi_17t_pro/2.jpg"));
         service.save(new GoodsImage(rootPath + "/xiaomi_17t_pro/3.jpg"));
         service.save(new GoodsImage(rootPath + "/xiaomi_17t_pro/4.jpg"));
+        service.save(new GoodsImage(rootPath + "/xiaomi_17t_pro/hs.png"));
+        service.save(new GoodsImage(rootPath + "/xiaomi_17t_pro/wyl.png"));
+        service.save(new GoodsImage(rootPath + "/xiaomi_17t_pro/xyz.png"));
 
         service.save(new GoodsImage(rootPath + "/xiaomi_17t/0.png"));
 
@@ -205,7 +209,7 @@ public class DatabaseGenerator {
     private void genGoods() {
         GoodsService service = goodsService;
 
-        service.save(Goods.builder()
+        xiaomi17tPro = service.save(Goods.builder()
                 .name("Xiaomi 17T Pro")
                 .price(4299f)
                 .discountedPrice(3999f)
@@ -329,5 +333,42 @@ public class DatabaseGenerator {
                         .value(v)
                         .build()
         ));
+    }
+
+    private void genGoodsSpecificationImage() {
+        GoodsSpecificationImageService service = goodsSpecificationImageService;
+
+        Set.of("12GB+256GB", "12GB+512GB", "16GB+512GB").forEach((v -> {
+            service.save(
+                    GoodsSpecificationImage.builder()
+                            .goods(xiaomi17tPro)
+                            .specifications(Set.of(
+                                    goodsSpecificationService.findByNameAndValue("颜色", "黑色"),
+                                    goodsSpecificationService.findByNameAndValue("版本", v)
+                            ))
+                            .image(goodsImageService.findByImagePath("/images/goods/xiaomi_17t_pro/hs.png"))
+                            .build()
+            );
+            service.save(
+                    GoodsSpecificationImage.builder()
+                            .goods(xiaomi17tPro)
+                            .specifications(Set.of(
+                                    goodsSpecificationService.findByNameAndValue("颜色", "午夜蓝"),
+                                    goodsSpecificationService.findByNameAndValue("版本", v)
+                            ))
+                            .image(goodsImageService.findByImagePath("/images/goods/xiaomi_17t_pro/wyl.png"))
+                            .build()
+            );
+            service.save(
+                    GoodsSpecificationImage.builder()
+                            .goods(xiaomi17tPro)
+                            .specifications(Set.of(
+                                    goodsSpecificationService.findByNameAndValue("颜色", "星云紫"),
+                                    goodsSpecificationService.findByNameAndValue("版本", v)
+                            ))
+                            .image(goodsImageService.findByImagePath("/images/goods/xiaomi_17t_pro/xyz.png"))
+                            .build()
+            );
+        }));
     }
 }

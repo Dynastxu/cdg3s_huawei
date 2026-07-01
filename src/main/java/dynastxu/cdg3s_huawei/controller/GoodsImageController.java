@@ -1,21 +1,31 @@
 package dynastxu.cdg3s_huawei.controller;
 
-import dynastxu.cdg3s_huawei.entity.GoodsImage;
+import dynastxu.cdg3s_huawei.entity.GoodsSpecificationImage;
 import dynastxu.cdg3s_huawei.service.GoodsImageService;
+import dynastxu.cdg3s_huawei.service.GoodsSpecificationImageService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 @Controller
-@RequestMapping("/goodsImage")
-public class GoodsImageController extends BaseController<GoodsImageService> {
-    public GoodsImageController(GoodsImageService goodsImageService) {
-        super(goodsImageService);
+@RequestMapping("/goods/image")
+public class GoodsImageController {
+    private final GoodsImageService goodsImageService;
+    private final GoodsSpecificationImageService goodsSpecificationImageService;
+
+    public GoodsImageController(
+            GoodsImageService goodsImageService,
+            GoodsSpecificationImageService goodsSpecificationImageService
+    ) {
+        this.goodsImageService = goodsImageService;
+        this.goodsSpecificationImageService = goodsSpecificationImageService;
     }
 
-    @RequestMapping("/getImage")
+    @RequestMapping("/specification")
     @ResponseBody
-    public GoodsImage getImage(Long id) {
-        return service.findById(id);
+    public List<GoodsSpecificationImage> GoodsSpecificationImages(Long goodsId) {
+        return goodsSpecificationImageService.findByGoodsId(goodsId);
     }
 }

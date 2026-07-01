@@ -67,9 +67,7 @@ public class SecurityConfig {
                                 "/auth/login",
                                 "/category/**",
                                 "/goods/**",
-                                "/goodsImage/**",
-                                "/goodsTag/**",
-                                "/images/**"
+                                "/images/goods/**"
                         ).permitAll()
                         // 管理员接⼝：仅 ADMIN ⻆⾊可访问（也可通过 @PreAuthorize 注解控制）
                         .requestMatchers("/api/admin").hasRole("ADMIN")

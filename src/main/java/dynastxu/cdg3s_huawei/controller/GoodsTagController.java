@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping("/goodsTag")
+@RequestMapping("/goods/tag")
 public class GoodsTagController extends BaseController<GoodsTagService> {
     GoodsTagController(GoodsTagService goodsTagService) {
         super(goodsTagService);
     }
 
-    @RequestMapping("/getTag")
+    @RequestMapping
     @ResponseBody
     public GoodsTag getTag(Long id) {
         return service.findById(id);

@@ -27,8 +27,4 @@ public class GoodsSpecification {
 
     @NotBlank
     private String value;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
-    private GoodsImage image;
 }
