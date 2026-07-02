@@ -1,5 +1,6 @@
 package dynastxu.cdg3s_huawei.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import dynastxu.cdg3s_huawei.validation.UniqueSpecificationNames;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -21,6 +22,7 @@ public class ShoppingCart {
     @ManyToOne
     @JoinColumn
     @NotNull
+    @JsonIgnore
     private User user;
 
     @ManyToOne
