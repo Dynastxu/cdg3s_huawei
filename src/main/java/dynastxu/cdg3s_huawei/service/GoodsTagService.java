@@ -5,13 +5,9 @@ import dynastxu.cdg3s_huawei.repository.GoodsTagRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class GoodsTagService extends BaseService<GoodsTagRepository> {
+public class GoodsTagService extends BaseService<GoodsTagRepository, GoodsTag> {
     public GoodsTagService(GoodsTagRepository repository) {
         super(repository);
-    }
-
-    public GoodsTag save(GoodsTag goodsTag) {
-        return repository.save(goodsTag);
     }
 
     public GoodsTag findByName(String name) {

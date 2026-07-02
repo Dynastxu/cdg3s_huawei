@@ -7,13 +7,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class GoodsSpecificationImageService extends BaseService<GoodsSpecificationImageRepository> {
+public class GoodsSpecificationImageService extends BaseService<GoodsSpecificationImageRepository, GoodsSpecificationImage> {
     public GoodsSpecificationImageService(GoodsSpecificationImageRepository repository) {
         super(repository);
-    }
-
-    public GoodsSpecificationImage save(GoodsSpecificationImage goodsSpecificationImage) {
-        return repository.save(goodsSpecificationImage);
     }
 
     public List<GoodsSpecificationImage> findByGoodsId(Long goodsId) {

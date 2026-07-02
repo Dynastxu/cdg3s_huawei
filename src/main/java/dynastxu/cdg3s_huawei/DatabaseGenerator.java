@@ -16,6 +16,7 @@ public class DatabaseGenerator {
     private final UserService userService;
     private final GoodsSpecificationService goodsSpecificationService;
     private final GoodsSpecificationImageService goodsSpecificationImageService;
+    private final ShoppingCartService shoppingCartService;
 
     private Goods xiaomi17tPro;
 
@@ -26,7 +27,8 @@ public class DatabaseGenerator {
             GoodsService goodsService,
             UserService userService,
             GoodsSpecificationService goodsSpecificationService,
-            GoodsSpecificationImageService goodsSpecificationImageService
+            GoodsSpecificationImageService goodsSpecificationImageService,
+            ShoppingCartService shoppingCartService
     ) {
         this.categoryService = categoryService;
         this.goodsImageService = goodsImageService;
@@ -35,6 +37,7 @@ public class DatabaseGenerator {
         this.userService = userService;
         this.goodsSpecificationService = goodsSpecificationService;
         this.goodsSpecificationImageService = goodsSpecificationImageService;
+        this.shoppingCartService = shoppingCartService;
         genDatabase();
     }
 
@@ -46,6 +49,7 @@ public class DatabaseGenerator {
         genGoods();
         genUser();
         genGoodsSpecificationImage();
+        genShoppingCart();
     }
 
     private void genCategory() {
@@ -370,5 +374,14 @@ public class DatabaseGenerator {
                             .build()
             );
         }));
+    }
+
+    private void genShoppingCart() {
+        ShoppingCartService service = shoppingCartService;
+
+        service.addGoods(userService.findByUsername("ZhangSan"), xiaomi17tPro, Set.of(
+                goodsSpecificationService.findByNameAndValue("颜色", "黑色"),
+                goodsSpecificationService.findByNameAndValue("版本", "12GB+256GB")
+        ));
     }
 }

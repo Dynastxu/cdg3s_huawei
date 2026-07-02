@@ -6,7 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService extends BaseService<UserRepository> {
+public class UserService extends BaseService<UserRepository, User> {
     private final PasswordEncoder passwordEncoder;
 
     public UserService(UserRepository repository, PasswordEncoder encoder) {
